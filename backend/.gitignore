@@ -1,0 +1,23 @@
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# React
+/build/
+/dist/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyz
+*.pyw
+*.pyc
+
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
