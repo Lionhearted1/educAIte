@@ -8,7 +8,7 @@ function Quiz() {
     const [isCorrect, setIsCorrect] = useState(false);
     const handleNextQuestion = () => {};
     const handlePreviousQuestion = () => {};
-    const question = 'What is the capital of France?';
+    const question = 'What is the capital of France?iubcnencwncnwncklwnlnn  coinwoncnwniocweoicew wocinanwecnwennc wncvwnw';
     const options = ['London', 'Paris', 'Berlin', 'Rome'];
     const correctAnswer = 'Paris';
 
@@ -24,12 +24,12 @@ function Quiz() {
     return (
         <div className="bg-gray-100 min-h-screen flex flex-col gap-11 items-center justify-center">
             <div className="bg-white shadow-2xl shadow-slate-500 rounded-2xl 
-            px-8 pt-6 pb-8 mb-4 flex flex-col h-[80vh] w-[100vh] justify-center  items-center">
+            px-8 pt-6 pb-8 mb-4 flex flex-col h-[80vh] w-[150vh] justify-center  items-center">
                 <div className="mb-4">
-                    <h2 className="text-2xl mb-2">{question}</h2>
+                    <h2 className="text-xl p-10 mb-2">{question}</h2>
                     <div className="flex flex-col">
                         {options.map((option, index) => (
-                            <label key={index} className="inline-flex items-center mt-3">
+                            <label key={index} className="inline-flex items-center px-10 mt-3">
                                 <input
                                     type="radio"
                                     name="option"

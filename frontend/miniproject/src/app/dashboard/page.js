@@ -1,7 +1,6 @@
 import React from 'react'
 
 import Navigation from './components/navigation'
-import NavigationComponent from './components2/NavigationComponent'
 import TopBar from './components/TopBar'
 import HeroSection from './components/HeroSection'
 import FilesList from './components/FilesList';
@@ -11,11 +10,11 @@ function Dashboard
   return (
     <>
     <div className="flex flex-row">
-      <Navigation/>
-      <div className="ml-[44vh] w-[132vh] h-[20vh]  flex flex-col">
-        <div className='mb-10 -ml-5 -mr-2'><TopBar/></div>
-        <HeroSection/>
-        <span className='flex flex-row  mt-5 -ml-5 gap-0'>
+     <Navigation/>
+      <div className="flex flex-col">
+        <div className='mb-2 ml-[21vw] w-[79vw] '><TopBar/></div>
+        <div className='w-[74vw] ml-[24vw]'><HeroSection/></div>
+        <span className='flex flex-row  mt-5 w-[74vw] ml-[24vw] gap-0'>
           <span className='basis-1/2 '>
             <FilesList/>
           </span>

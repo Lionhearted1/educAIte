@@ -1,5 +1,5 @@
 import React from 'react';
-
+import Image from 'next/image';
 const TopBar = () => {
     return (
         <div className="topbar flex items-center justify-between bg-gray-200 p-2">
@@ -16,7 +16,7 @@ const TopBar = () => {
                 </div>
             </centre>
             <div className="profile-picture">
-                <img src="" alt="Profile" className="rounded-full bg-blue-500 w-10 h-10" />
+                <Image src="" alt="Profile" className="rounded-full bg-blue-500 w-10 h-10" />
             </div>
         </div>
     );

@@ -7,7 +7,7 @@ span{
 
 :root {
     --blue: #0077b6;
-    --white: #f8f9fa;
+    --white: #ffffff;
     --grey: #adb5bd;
     --black1:#343a40;
     --black2:#212529;
@@ -18,9 +18,9 @@ span{
     --green: #76f7ae;
     --lightblue: #d6faff;
     --background-color: #fffbee;
-    /* -------- Spacing -------- */
+    /* -------- Spacing -------- ------------------------------------------------------------------*/
       --section-padding: 10px;
-  /* -------- Typography -------- */
+  /* -------- Typography -------- ---------------------------------------------------------------*/
   --fs-1: 4rem;
   --fs-2: 3rem;
   --fs-3: 2.5rem;
@@ -32,19 +32,19 @@ span{
   --fw-800: 800;
   --fw-700: 700;
   --fw-500: 500;
-   /* -------- Shadow -------- */
+   /* -------- Shadow -------------------------------------------------------------------- */
   
   --shadow-1: 0 0 20px var(--black_10);
   --shadow-2: 0px 10px 24px var(--coquelicot_20);
   
-   /* -------- Border Radius -------- */
+   /* -------- Border Radius -------- ----------------------------------------------------------*/
   
   --radius-25: 25px;
   --radius-13: 13px;
   --radius-10: 10px;
   --radius-15: 15px;
   
-   /* -------- Transition -------- */
+   /* -------- Transition ------------------------------------------------------- */
   
   --transition-1: 0.25s ease;
   --transition-2: 0.5s ease;

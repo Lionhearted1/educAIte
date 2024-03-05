@@ -16,46 +16,46 @@ function Navigation() {
         <li>
           <a>
            
-            <span class="title">Home</span>
+            <span className="title">Home</span>
           </a>
         </li>
         <li>
           <a>
            
-           <span class="title">Upload</span>
+           <span className="title">Upload</span>
           </a>
         </li>
         <li>
           <a>
             
-            <span class="title">Chat</span>
+            <span className="title">Chat</span>
           </a>
         </li>
         <li>
           <a>
            
-            <span class="title">Help</span>
+            <span className="title">Help</span>
           </a>
         </li>
         <li>
           <a>
             
-            <span class="title">Settings</span>
+            <span className="title">Settings</span>
           </a>
         </li>
         <li>
           <a>
            
-            <span class="title">Password</span>
+            <span className="title">Password</span>
           </a>
         </li>
         <li>
           <a>
             
-            <span class="title">Sign Out</span>
+            <span className="title">Sign Out</span>
           </a>
         </li>
-        {/* Add other navigation items */}
+       
       </ul>
     </div>
     
