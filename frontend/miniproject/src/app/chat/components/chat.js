@@ -36,11 +36,19 @@ const ChatInterface = () => {
       
    
     return (
-        <div className="flex flex-col h-screen overflow-x-hidden  bg-gray-100 relative">
+        <div className="flex flex-col h-screen overflow-x-hidden   relative
+           rounded-md border-2 border-black
+         bg-white bg-[radial-gradient(#cacbce_1px,transparent_1px)] 
+         shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] [background-size:16px_16px] m750:px-5 m750:py-10">
+
             <div className="flex items-center justify-between  p-4 bg-white shadow">
+                <button className='bg-purple-700 hover:bg-purple-500 shadow-[8px_8px_0px_rgba(0,0,0,1)]
+                         border-2 border-black text-white font-bold py-2 px-4 rounded-lg focus:outline-none
+                         hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 
+                         focus:shadow-outline'>back</button>
                  {/* ---------------------------{toggle button----- -----------------------------------} */}
-                                <div className='ml-[90vh]'>
-                                    <label className="relative inline-flex cursor-pointer items-center">
+                                <div className=''>
+                                    <label className="relative -left-[45vw] inline-flex cursor-pointer items-center">
                                                                 <input type="checkbox" value="" className="peer sr-only" 
                                                                 onClick={handleToggle}/>
                                                                 <div className="peer h-8 w-[70px] rounded-full border-2 border-black
@@ -59,7 +67,7 @@ const ChatInterface = () => {
                                             {messages.map((message, index) => (
                                                     <div
                                                         key={index}
-                                                        className={`relative   ${message.sender === 'user' ? 'left-2' : 'left-[65vw]'} mb-4`}
+                                                        className={`relative   ${message.sender === 'user' ? 'left-8' : 'left-[65vw]'} mb-4`}
                                                     >
                                                         <div
                                                             className={`rounded-lg pl-3 pr-3 max-w-sm  shadow-[8px_8px_0px_rgba(0,0,0,1)] 
@@ -74,7 +82,7 @@ const ChatInterface = () => {
                                         ))}
                                 </div>
                                     </div>
-                    <div className="flex items-center gap-5 justify-center mt-4">
+                    <div className="flex items-center gap-5 justify-center mb-8 mt-4">
                         <input
                             type="text"
                             
@@ -82,6 +90,7 @@ const ChatInterface = () => {
                             placeholder="Your Prompt Here...."
                             className="flex-grow px-4 py-2 
                             mr-2 text-gray-700 bg-white border
+                            hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150
                              border-gray-300 rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] focus:outline-none 
                              focus:ring-2 focus:ring-blue-500"
                         />
@@ -89,15 +98,17 @@ const ChatInterface = () => {
                             onClick={handleSendMessage}
                             className="px-4 py-2 text-white bg-[#C4A1FF] rounded-lg
                             shadow-[8px_8px_0px_rgba(0,0,0,1)]
+                            hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150
                              hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
                         >
                             Send
                         </button>
                         <label
                             htmlFor="file-upload"
-                            className="px-4 py-2 ml-2 text-white bg-green-500 rounded-lg 
+                            className="px-4 py-2 ml-2 text-white bg-yellow-500 rounded-lg 
                             shadow-[8px_8px_0px_rgba(0,0,0,1)]
-                             hover:bg-green-600 focus:outline-none focus:bg-green-600"
+                            hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150
+                             hover:bg-yellow-600 focus:outline-none focus:bg-yellow-600"
                         >
                             Upload
                         </label>
