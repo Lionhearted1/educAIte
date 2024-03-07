@@ -20,7 +20,7 @@ function Card1Component({ folder }) {
 
   return (
     <div
-      className="neo-box flex flex-col mt-8 w-50 h-48 justify-between"
+      className="neo-box flex flex-col mt-8 w-50 h-48 justify-between border-black border-2 "
       style={{ backgroundColor: neoBrutalismColor }}
     >
       <h1 className="text-[30px]">{folder.name}</h1>

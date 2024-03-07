@@ -32,7 +32,7 @@ function page() {
           <div className="flex flex-col flex-grow">
             <HeroSectionComponent />
 
-            <div className="flex justify-evenly flex-wrap">
+            <div className="flex justify-evenly flex-wrap mb-5">
               <FolderSection folders={folders} addFolder={addFolder} />
             </div>
           </div>

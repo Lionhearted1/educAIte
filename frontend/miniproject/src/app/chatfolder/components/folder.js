@@ -1,7 +1,7 @@
 "use client";
 import styles from "./style.css";
 import React, { useState } from "react";
-import Card2Component from "../../dashboard2/components/Card2Component";
+import Card1Component from "./Card1Component";
 
 const Folder = () => {
     const [showOverlay, setShowOverlay] = useState(false);
@@ -41,28 +41,21 @@ const Folder = () => {
       <div>
         <center>
           <div
-            className="bg-lavender w-[90vw] h-[80vh]  rounded-lg border-2 mt-[05%]
-                       border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] px-20 py-10"
+            className="bg-white w-[90vw] h-[80vh]  rounded-lg border-2 mt-[05%]
+                       border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] px-20 py-12 overflow-y-auto"
           >
             <div
-              className="bg-lime-400 h-16 absolute w-16 rounded-full border-0 top-8 left-[10%]  -rotate-12  border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]"
+              className="bg-yellow-400 h-16 absolute w-16 rounded-full border-0 top-8 left-[10%]  -rotate-12  border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] over"
             ></div>
             <center>
               <h1 className="text-2xl font-bold mb-4 ">Chat Folders</h1>
             </center>
-            <div className="flex flex-col">
+            <div className="grid grid-cols-3 gap-20 h-full">
               {folders.map((folder) => (
-                <Card2Component key={folder.id} folder={folder} />
+                <Card1Component key={folder.id} folder={folder} />
               ))}
             </div>
-            <center>
-              <button
-                className="bg-yellow-500 hover:bg-yellow-200 text-white py-2 px-4 rounded-full hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 mt-10 shadow-[8px_8px_0px_rgba(0,0,0,1)]"
-                onClick={handleAddFolder}
-              >
-                Add Folder
-              </button>
-            </center>
+            
             {showOverlay && (
               <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <div className="bg-white w-[40vw] h-[40vh] p-4 rounded">
@@ -77,7 +70,7 @@ const Folder = () => {
                         type="text"
                         value={fileName}
                         onChange={(e) => setFileName(e.target.value)}
-                        className="mb-2 p-1 border-2 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] rounded-lg hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150"
+                        className="mb-2 mx-4 p-2 border-2 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] rounded-lg hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150"
                         placeholder="Enter file name"
                       />
                       <button
@@ -92,6 +85,14 @@ const Folder = () => {
               </div>
             )}
           </div>
+          <center>
+              <button
+                className="bg-yellow-500 hover:bg-yellow-200 text-black border-black border-2 py-2 px-4 rounded-full hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 mt-4 shadow-[8px_8px_0px_rgba(0,0,0,1)]"
+                onClick={handleAddFolder}
+              >
+                Add Folder
+              </button>
+            </center>
         </center>
       </div>
     );

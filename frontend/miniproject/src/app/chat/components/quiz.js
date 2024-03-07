@@ -1,7 +1,6 @@
 "use client"
 import React, { useState } from 'react';
 import 'tailwindcss/tailwind.css';
-import chatComponent from './chatComponent';
 
 const Quiz = () => {
     const questions = [
