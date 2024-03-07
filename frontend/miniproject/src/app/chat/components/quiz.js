@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from 'react';
 import 'tailwindcss/tailwind.css';
+import chatComponent from './chatComponent';
 
 const Quiz = () => {
     const questions = [
@@ -61,6 +62,7 @@ const Quiz = () => {
     const [selectedOption, setSelectedOption] = useState(null);
     const [isAnswered, setIsAnswered] = useState(false);
     const [isCorrect, setIsCorrect] = useState(false);
+   
 
     const handleNextQuestion = () => {
         if (currentQuestionIndex < questions.length - 1) {
@@ -88,61 +90,89 @@ const Quiz = () => {
 
     const { question, options } = questions[currentQuestionIndex];
 
-    return (
-        <div className="min-h-screen flex flex-col gap-10 items-center justify-center w-full rounded-md border-2 border-black bg-purple-500 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] [background-size:16px_16px] ">
-            <div className="bg-white rounded-2xl relative px-8 pt-6 pb-8 mb-4 flex flex-col h-[60vh] w-[75vw] justify-center border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 items-center">
-                <div className="bg-lime-400 h-14 absolute w-14 border-2 -bottom-4 -left-6 -rotate-12  border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]"></div>
-                <div className="mb-4">
-                    <h2 className="text-xl p-10 mb-2">{question}</h2>
-                    <div className="flex flex-col">
-                        {options.map((option, index) => (
-                            <label key={index} className="inline-flex items-center px-10 mt-3">
-                                <input
-                                    type="radio"
-                                    name="option"
-                                    value={option}
-                                    checked={selectedOption === index}
-                                    onChange={() => handleOptionSelect(index)}
-                                    className="form-radio h-5 w-5 text-gray-600"
-                                />
-                                <span className="ml-2 text-gray-700">{option}</span>
-                            </label>
-                        ))}
-                    </div>
-                </div>
-                {isAnswered && (
-                    <p className={`text-${isCorrect ? 'green' : 'red'}-500 mt-4`}>
-                        {isCorrect ? 'Correct answer!' : 'Wrong answer!'}
-                    </p>
-                )}
-                <div className='bg-yellow-300 h-14 absolute w-14 border-2 -top-4 -right-6 -rotate-12 rounded-full border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]'></div>
-            </div>
-            <div className="flex flex-row gap-5 mb-8 items-center justify-between">
-                <button
-                    onClick={handlePreviousQuestion}
-                    className="bg-purple-700 hover:bg-purple-500 shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black text-white font-bold py-2 px-4 hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 rounded-lg focus:outline-none focus:shadow-outline"
-                    disabled={currentQuestionIndex === 0}
-                >
-                    Previous
-                </button>
-                {currentQuestionIndex === questions.length - 1 ? (
-                    <button
-                        onClick={handleNextQuestion}
-                        className="bg-purple-700 hover:bg-purple-500 shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black text-white font-bold py-2 px-4 rounded-lg focus:outline-none hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 focus:shadow-outline"
-                    >
-                        Finish
-                    </button>
-                ) : (
-                    <button
-                        onClick={handleNextQuestion}
-                        className="bg-purple-700 hover:bg-purple-500 shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black text-white font-bold py-2 px-4 rounded-lg focus:outline-none hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 focus:shadow-outline"
-                    >
-                        Next
-                    </button>
-                )}
-            </div>
-        </div>
-    );
+    const [isQuiz,setIsquiz]=useState(false)
+    const handleFinishQuestion=()=>{
+            setIsquiz(false)
+          
+    }
+    const handleSendMessage = () => {
+        // Implement logic to send messages
+      };
+
+
+ return (
+    <>
+         <div className="min-h-screen flex flex-col gap-10 items-center justify-center w-full rounded-md border-2 border-black bg-purple-500 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] [background-size:16px_16px] ">
+             <div className="bg-white rounded-2xl relative px-8 pt-6 pb-8 mb-4 flex flex-col h-[60vh] w-[75vw] justify-center border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 items-center " style={{ display: isQuiz ? 'block' : 'none' }}>
+                 <div className="bg-lime-400 h-14 absolute w-14 border-2 -bottom-4 -left-6 -rotate-12  border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]"></div>
+                 <div className="mb-4">
+                     <h2 className="text-xl p-10 mb-2">{question}</h2>
+                     <div className="flex flex-col">
+                         {options.map((option, index) => (
+                             <label key={index} className="inline-flex items-center px-10 mt-3">
+                                 <input
+                                     type="radio"
+                                     name="option"
+                                     value={option}
+                                     checked={selectedOption === index}
+                                     onChange={() => handleOptionSelect(index)}
+                                     className="form-radio h-5 w-5 text-gray-600"
+                                 />
+                                 <span className="ml-2 text-gray-700">{option}</span>
+                             </label>
+                         ))}
+                     </div>
+                 </div>
+                 {isAnswered && (
+                     <p className={`text-${isCorrect ? 'green' : 'red'}-500 mt-4`}>
+                         {isCorrect ? 'Correct answer!' : 'Wrong answer!'}
+                     </p>
+                 )}
+                 <div className='bg-yellow-300 h-14 absolute w-14 border-2 -top-4 -right-6 -rotate-12 rounded-full border-black shadow-[8px_8px_0px_rgba(0,0,0,1)]'></div>
+             </div>
+             <div className="flex flex-row gap-5 mb-8 items-center justify-between " style={{ display: isQuiz ? 'block' : 'none' }}>
+                 <button
+                     onClick={handlePreviousQuestion}
+                     className="bg-purple-700 hover:bg-purple-500 shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black text-white font-bold py-2 px-4 hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 rounded-lg focus:outline-none focus:shadow-outline"
+                     disabled={currentQuestionIndex === 0}
+                 >
+                     Previous
+                 </button>
+                 {currentQuestionIndex === questions.length - 1 ? (
+                     <button
+                         onClick={handleFinishQuestion}
+                         className="bg-purple-700 hover:bg-purple-500 shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black text-white font-bold py-2 px-4 rounded-lg focus:outline-none hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 focus:shadow-outline"
+                     >
+                         Finish
+                     </button>
+                 ) : (
+                     <button
+                         onClick={handleNextQuestion}
+                         className="bg-purple-700 hover:bg-purple-500 shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black text-white font-bold py-2 px-4 rounded-lg focus:outline-none hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 focus:shadow-outline"
+                     >
+                         Next
+                     </button>
+                 )}
+             </div>
+             <div className="flex items-center gap-5 justify-center mb-8 mt-4 " style={{ display: isQuiz ? 'none' : 'block' }}>
+            <input
+              type="text"
+              onChange={(e) => setNewMessage(e.target.value)}
+              placeholder="Enter Your Quiz Query Here...."
+              className="w-80 flex-grow px-4 py-2 mr-2 text-gray-700 bg-white hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 border-2 border-black rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+            <button
+              onClick={handleSendMessage}
+              className="px-4 py-2 text-white bg-[#C4A1FF] rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+            >
+              Send
+            </button>
+            
+          </div>
+         </div>
+         
+         </>
+     );
 };
 
 export default Quiz;
