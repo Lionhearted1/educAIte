@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@900&family=Luckiest+Guy&family=Public+Sans:wght@600&display=swap');
+
+/* body {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+	font-family: 'Public Sans', sans-serif;
+	background-color: #bc9fdb;
+} */
+
+body {
+	overflow-x: hidden;
+	font-family: 'Public Sans', sans-serif;
+	margin: 0;
+	padding: 0;
+	background: radial-gradient(#cacbce 1px, transparent 1px);
+	background-size: 16px 16px;
+  }
+  
+
+h1 {
+	font-family: 'Darker Grotesque', cursive;
+}
+
+h2, h3, h4, h5 {
+	font-family: 'Darker Grotesque', sans-serif;
+}
+
+h2 {
+	font-size: 2em;
+}
+
+.dashboard {
+	padding: 1em;
+	padding-right: 1.5em;
+}
+
+.neo-box {
+	box-shadow: 7px 10px 0px 3px rgba(0,0,0,1);
+-webkit-box-shadow: 7px 10px 0px 3px rgba(0,0,0,1);
+-moz-box-shadow: 7px 10px 0px 3px rgba(0,0,0,1);
+	border-radius: 10px;
+	padding: 20px;
+	/* background-color: white; */
+}
+
+/* .profile {
+	margin: 15px;
+	background-color: #f2d048;
+	padding: 20px;
+	padding-top: 10px;
+	padding-bottom: 10px
+} */
+
+.profile > div {
+	margin-top: 2em;
+	display: flex;
+	align-items: center;
+	gap: 2em;
+}
+
+.profile h2 {
+	line-height: 100%;
+}
+
+
+.profile h1 {
+	font-size: 10vw;
+	margin-top: 0;
+	margin-bottom: 0;
+	line-height: 100%;
+}
+
+.profile h2 {
+	text-align: center;
+	margin-top: 0;
+}
+
+
+
+@keyframes spin {
+    from {
+        transform:rotate(0deg);
+    }
+    to {
+        transform:rotate(360deg);
+    }
+}
+
+@keyframes float {
+	0% {
+		transform: translatey(0px);
+	}
+	50% {
+		transform: translatey(-20px);
+	}
+	100% {
+		transform: translatey(0px);
+	}
+}
+
+
+
+.number {
+	font-family: 'Darker Grotesque', sans-serif;
+	font-size: 3em;
+}
+
+
+.credits {
+	text-align: center;
+	padding-bottom: 2em;
+}
+
+a {
+	color: black;
+}
+
+
+
+  .topbar {
+    display: flex;
+	width: 90vw;
+    justify-content: flex-end; /* Align children to the right end */
+    height: 60px; /* Set the height as needed */
+    background-color: transparent; /* Set the background color */
+    padding: 0 20px; /* Add padding to the topbar */
+    margin-top: 40px;
+    /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  */
+  }
+  
+  /* Style for NavSelectComponent */
+  .topbar .nav-select {
+    margin-left: 20px; /* Add margin to separate from other content if needed */
+  }
+  
+  /* .bg-gradient-container {
+	display: flex;
+	height: 100%;
+	width: 100%;
+	justify-content: center;
+	align-items: center;
+	border-radius: 20px; 
+	border: 2px solid black;
+	background: white;
+	background-image: radial-gradient(#cacbce 1px, transparent 1px);
+	background-size: 16px 16px;
+	padding: 20px;
+	box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  }
+   */
+  
+ 
