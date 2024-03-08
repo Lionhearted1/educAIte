@@ -1,11 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import styles from "./dashboard2style.css";
 import HeroSectionComponent from "./components/HeroSectionComponent";
-import Card1Component from "./components/Card1Component";
 import TopBarComponent from "./components/TopBarComponent";
-import Card2Component from "./components/Card2Component";
-import NavSelectComponent from "./components/NavSelectComponent";
 import FolderSection from "./components/FolderSection";
 import "./dashboard2style.css";
 

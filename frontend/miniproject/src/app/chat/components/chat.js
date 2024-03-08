@@ -31,7 +31,7 @@ const ChatInterface = () => {
   return (
     <div className="flex flex-col h-screen overflow-x-hidden relative rounded-md border-2 border-black bg-white bg-[radial-gradient(#cacbce_1px,transparent_1px)] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] [background-size:16px_16px] m750:px-5 m750:py-10">
       <div className="flex items-center justify-between p-4 bg-white shadow">
-        <Link href="/dashboard2">
+        <Link href="/dashboard">
           <button className="bg-purple-600 hover:bg-purple-400 shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black text-black font-bold py-2 px-4 rounded-lg focus:outline-none hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 focus:shadow-outline">
             Back
           </button>
