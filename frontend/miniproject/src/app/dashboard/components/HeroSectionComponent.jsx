@@ -3,7 +3,7 @@ import React from "react";
 function HeroSectionComponent() {
   return (
     <div className="mt-4">
-      <div className="profile neo-box w-[90vw] h-[38vh] relative bg-gradient-to-r from-purple-400 to-yellow-300 rounded-2xl z-0">
+      <div className="profile neo-box w-[90vw] h-[38vh] relative bg-gradient-to-r from-purple-400 to-yellow-300 rounded-2xl z-0 border-black border-2">
         <div>
           {/* <img
             src="https://cdn-icons-png.flaticon.com/256/8598/8598863.png"

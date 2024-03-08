@@ -6,8 +6,8 @@ const FolderSection = ({ folders , addfolder }) => {
   const showAllCard = folders.length > 5;
 
   return (
-    <div className="mt-8 overflow-x-auto w-[90vw]">
-      <div className="grid grid-cols-3 gap-20">
+    <div className="mt-8 w-[90vw]">
+      <div className="grid grid-cols-3 gap-24">
         {limitedFolders.map((folder, index) => (
           <Card1Component key={index} folder={folder} />
         ))}
