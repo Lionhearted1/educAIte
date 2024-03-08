@@ -1,10 +1,10 @@
 import React from 'react'
-import koading from '../../../../public/koading.gif'
+// import koading from '../../../../public/koading.gif'
 
 function Loader() {
   return (
-    <div>
-        <img src="{koading}" alt="Loading" />
+    <div className="loader">
+      <div className="spinner"></div>
     </div>
   )
 }
