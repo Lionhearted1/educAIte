@@ -33,8 +33,39 @@ const ChatInterface = () => {
 
   const [newMessage, setNewMessage] = useState("");
 
-  const handleSendMessage = () => {
-    // Implement logic to send messages
+  const handleSendMessage = async () => {
+    try {
+      const response = await axios.post('http://127.0.0.1:3000/chat/chat', {
+        unique_id: unique_id,
+        user_name: "hello",
+        input_text: newMessage,
+      });
+  
+      console.log('Message sent successfully:', response.data);
+  
+      if (response.status === 200) {
+        console.log(response.data)
+        window.location.reload()
+        // Implement logic to handle successful response
+      } else {
+        console.error('Unexpected status code:', response.status);
+        // Handle unexpected status code
+      }
+    } catch (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.error('Error response data:', error.response.data);
+      } else if (error.request) {
+        // The request was made but no response was received
+        console.error('Error request:', error.request);
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.error('Error message:', error.message);
+      }
+  
+      // Handle error, show a message to the user, or perform any other necessary actions
+    }
   };
 
   const handleFileUpload = async (event) => {

@@ -29,12 +29,7 @@ const Folder = () => {
   // Function to save folders to the external API
   const saveFoldersToExternalApi = async () => {
     try {
-      const newFolder = {
-        unique_id: folders.length + 1,
-        folder_name: fileName,
-        user_name: "hello",
-      };
-  
+      
       const response = await axios.post('http://127.0.0.1:3000/folders/create', {
         unique_id: uuidv4(),
         folder_name: fileName,
