@@ -1,61 +1,74 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useState, useEffect } from "react";
 import 'tailwindcss/tailwind.css';
+import { useSearchParams } from "next/navigation";
+import axios from "axios";
 
 const Quiz = () => {
-    const questions = [
-        {
-            question: 'What is the capital of France?',
-            options: ['London', 'Paris', 'Berlin', 'Rome'],
-            correctOptionIndex: 1
-        },
-        {
-            question: 'Which planet is known as the Red Planet?',
-            options: ['Mars', 'Venus', 'Jupiter', 'Saturn'],
-            correctOptionIndex: 0
-        },
-        {
-            "question": "What is the main function of EducAIte in text processing?",
-            "options": [
-                "It identifies entities and sentiments in texts.",
-                "It extracts information from PDFs and generates quizzes and summaries.",
-                "It offers features like question generation and automated essay grading.",
-                "It provides engaging and user-friendly solutions for document interaction."
-            ],
-            "correctOptionIndex": 1
-        },
-        {
-            "question": "Which language models does EducAIte integrate?",
-            "options": [
-                "Ollama and ChatGPT",
-                "Mistral and BERT",
-                "GPT-3 and RoBERTa",
-                "Transformer and LSTM"
-            ],
-            "correctOptionIndex": 0
-        },
-        {
-            "question": "What programming language is EducAIte built on?",
-            "options": [
-                "JavaScript",
-                "Python",
-                "Ruby",
-                "C++"
-            ],
-            "correctOptionIndex": 1
-        },
-        {
-            "question": "What are the challenges EducAIte aims to address in document interaction?",
-            "options": [
-                "Efficiently processing and generating summaries from PDFs",
-                "Creating engaging quizzes for educational purposes",
-                "Identifying entities and sentiments within texts",
-                "Offering automated essay grading"
-            ],
-            "correctOptionIndex": 0
-        },
-        // Add more questions here
-    ];
+    const searchParams = useSearchParams();
+
+  const unique_id = searchParams.get("unique_id");
+  console.log(unique_id);
+
+  const [questions, setQuestions] = useState([
+    {
+        question: 'What is the capital of France?',
+        options: ['London', 'Paris', 'Berlin', 'Rome'],
+        correct_option_index: 1
+    },
+    {
+        question: 'Which planet is known as the Red Planet?',
+        options: ['Mars', 'Venus', 'Jupiter', 'Saturn'],
+        correct_option_index: 0
+    }
+]);
+
+    const [isQuiz,setIsquiz]=useState(false)
+    const handleFinishQuestion=()=>{
+            setSelectedOption(null);
+            setIsquiz(false)
+
+          
+    }
+    const handleSendMessage = async () => {
+        try {
+          const response = await axios.post('http://127.0.0.1:3000/quiz/quiz', {
+            unique_id: unique_id,
+            user_name: "hello",
+            input_text: newMessage,
+          });
+      
+          console.log('Message sent successfully:', response.data);
+      
+          if (response.status === 200) {
+            console.log(response.data)
+            setQuestions(response.data.quizResults.quiz_questions);
+            setIsquiz(true);
+            // Implement logic to handle successful response
+          } else {
+            setIsquiz(false)
+            console.error('Unexpected status code:', response.status);
+            // Handle unexpected status code
+          }
+        } catch (error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            console.error('Error response data:', error.response.data);
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.error('Error request:', error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.error('Error message:', error.message);
+          }
+      
+          // Handle error, show a message to the user, or perform any other necessary actions
+        }
+      };
+      
+      
+
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedOption, setSelectedOption] = useState(null);
@@ -84,19 +97,13 @@ const Quiz = () => {
     const handleOptionSelect = (optionIndex) => {
         setSelectedOption(optionIndex);
         setIsAnswered(true);
-        setIsCorrect(optionIndex === questions[currentQuestionIndex].correctOptionIndex);
+        setIsCorrect(optionIndex === questions[currentQuestionIndex].correct_option_index);
     };
 
     const { question, options } = questions[currentQuestionIndex];
+    const [newMessage, setNewMessage] = useState("");
 
-    const [isQuiz,setIsquiz]=useState(false)
-    const handleFinishQuestion=()=>{
-            setIsquiz(false)
-          
-    }
-    const handleSendMessage = () => {
-        // Implement logic to send messages
-      };
+    
 
 
  return (

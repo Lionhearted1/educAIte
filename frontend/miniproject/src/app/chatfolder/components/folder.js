@@ -1,42 +1,67 @@
 "use client";
 import styles from "./style.css";
-import React, { useState } from "react";
+import { useEffect, useState } from 'react';
 import Card1Component from "./Card1Component";
+import axios from "axios";
+import { useRouter } from 'next/navigation'
+import { v4 as uuidv4 } from 'uuid';
 
 const Folder = () => {
-    const [showOverlay, setShowOverlay] = useState(false);
-    const [fileName, setFileName] = useState("");
-    const [folders, setFolders] = useState([
-      {
-        id: 1,
-        name: "Folder 1",
-        username: "",
-        link: null,
-      },
-      {
-        id: 2,
-        name: "Folder 2",
-        username: "",
-        link: null,
-      },
-    ]);
+  const [showOverlay, setShowOverlay] = useState(false);
+  const [fileName, setFileName] = useState("");
+  const [folders, setFolders] = useState([]);
+  const router = useRouter();
+
+  // Function to fetch folders from external API
+  const fetchFoldersFromExternalApi = async () => {
+    try {
+      const apiUrl = `http://127.0.0.1:3000/folders/get_all`;
+      const user_name = 'hello'; // Replace this with your actual user_name
+      const response = await axios.get(apiUrl, { params: { user_name } });
+      const response_folders= response.data.folders;
+      setFolders(response_folders)
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching folders:', error);
+    }
+  };
+
+  // Function to save folders to the external API
+  const saveFoldersToExternalApi = async () => {
+    try {
+      
+      const response = await axios.post('http://127.0.0.1:3000/folders/create', {
+        unique_id: uuidv4(),
+        folder_name: fileName,
+        user_name: "hello",
+      });
   
-    const handleAddFolder = () => {
-      setShowOverlay(true);
-    };
+      if (response.status === 200) {
+        console.log('Folder saved to external API successfully');
+      } else {
+        console.error('Unexpected response from external API:', response);
+      }
+    } catch (error) {
+      console.error('Error saving folder to external API:', error);
+    }
+  };
   
-    const handleSave = () => {
-      setFolders((prevFolders) => [
-        ...prevFolders,
-        {
-          id: folders.length + 1,
-          name: fileName,
-        },
-      ]);
-      console.log(folders);
-      setShowOverlay(false);
-    };
-  
+  const handleAddFolder = () => {
+    setShowOverlay(true);
+  };
+
+  const handleSave = () => {
+    saveFoldersToExternalApi();
+    setShowOverlay(false);
+    window.location.reload();
+    
+  };
+
+  // Fetch folders on component mount
+  useEffect(() => {
+    fetchFoldersFromExternalApi();
+  }, []);
+
     return (
       <div>
         <center>
