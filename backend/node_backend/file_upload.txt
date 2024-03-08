@@ -1,0 +1,75 @@
+// Import necessary libraries
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
+
+function UploadOverlay() {
+  // State variables
+  const [user_name, setUser_name] = useState(''); // Replace with actual value
+  const [unique_id, setUnique_id] = useState(''); // Replace with actual value
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  // Next.js router
+  const router = useRouter();
+
+  // Effect to set user_name from cookies and unique_id from query parameters
+  useEffect(() => {
+    setUser_name(Cookies.get('user_name') || ''); // Replace 'user_name' with your actual cookie name
+
+    // Set unique_id from query parameters
+    const { unique_id } = router.query;
+    if (unique_id) {
+      setUnique_id(unique_id.toString());
+    }
+  }, [router.query]);
+
+  // Function to handle file selection
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
+  // Function to handle file upload
+  const handleUpload = async () => {
+    try {
+      // Check if a file is selected
+      if (!selectedFile) {
+        console.error('No file selected');
+        return;
+      }
+
+      // Create FormData object to append data
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      formData.append('user_name', user_name);
+      formData.append('unique_id', unique_id);
+
+      // Make Axios request to external link
+      const response = await axios.post('https://external-link.com/upload', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      // Handle the response as needed
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
+
+  return (
+    <div className='h-[60vh] w-[60vh] bg-white/40'>
+      <input type='file' onChange={handleFileChange} />
+      <button
+        onClick={handleUpload}
+        className='border-2 border-black p-1 h-10 rounded-lg bg-lavender mb-8 mt-5 -translate-y-5 w-64 
+          shadow-[8px_8px_0px_rgba(0,0,0,1)]'
+      >
+        Upload
+      </button>
+    </div>
+  );
+}
+
+export default UploadOverlay;
