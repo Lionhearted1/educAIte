@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { appWithTranslation } from 'next-i18next';
+// import { appWithTranslation } from 'next-i18next';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,4 +17,6 @@ function RootLayout({ children }) {
   );
 }
 
-export default appWithTranslation(RootLayout);
+export default RootLayout;
+
+// export default appWithTranslation(RootLayout);

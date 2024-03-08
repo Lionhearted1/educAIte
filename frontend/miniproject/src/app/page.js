@@ -2,7 +2,7 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { appWithTranslation } from 'next-i18next';
+// import { appWithTranslation } from 'next-i18next';
 
 function Home() {
   const router = useRouter();
@@ -10,7 +10,7 @@ function Home() {
   useEffect(() => {
     // Redirect to /signup/signup as soon as the component mounts
     router.push("/signup");
-  }, [router]);
+  }, [router]);xw
 
   return (
     <>
@@ -19,4 +19,5 @@ function Home() {
   );
 }
 
-export default appWithTranslation(Home);
+export default Home;
+// export default appWithTranslation(Home);

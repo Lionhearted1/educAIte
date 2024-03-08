@@ -14,7 +14,9 @@ const ChatInterface = () => {
   const searchParams = useSearchParams();
   const username = Cookies.get("user_name");
   const [loading, setLoading] = useState(false);
-  const [uploading,setUploading]=useState(false)
+  const [uploading,setUploading]=useState(false);
+
+  
 
   const unique_id = searchParams.get("unique_id");
   console.log(unique_id);
@@ -147,6 +149,57 @@ const ChatInterface = () => {
     messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
+  const [showTranslated, setShowTranslated] = useState({});
+const [translatedMessages, setTranslatedMessages] = useState({});
+
+const handleTranslate = async (originalText, messageId) => {
+  try {
+    const response = await axios.post('http://127.0.0.1:3002/translate', {
+      text: originalText,
+      // Other necessary parameters for translation API
+    });
+
+    // Assuming the API response contains the translated text
+    const translatedText = response.data.translatedText;
+
+    // Update the state to store translated text for the specific message
+    setTranslatedMessages((prevTranslations) => ({
+      ...prevTranslations,
+      [messageId]: translatedText,
+    }));
+
+    return translatedText;
+  } catch (error) {
+    console.error('Error translating text:', error);
+    return originalText; // Fallback to original text on error
+  }
+};
+
+const toggleTranslation = async (originalText, messageId) => {
+  const isTranslated = translatedMessages[messageId] !== undefined;
+
+  if (isTranslated) {
+    // If already translated, set it back to the original text
+    setTranslatedMessages((prevTranslations) => {
+      const updatedTranslations = { ...prevTranslations };
+      delete updatedTranslations[messageId];
+      return updatedTranslations;
+    });
+  } else {
+    // If not translated, translate the original text
+    const translatedText = await handleTranslate(originalText);
+    setTranslatedMessages((prevTranslations) => ({
+      ...prevTranslations,
+      [messageId]: translatedText,
+    }));
+  }
+
+  // Toggle the state to show translated content
+  setShowTranslated(!isTranslated);
+};
+
+  
+
   return (
     <div className="flex flex-col h-screen overflow-x-hidden relative rounded-md border-2 border-black bg-white bg-[radial-gradient(#cacbce_1px,transparent_1px)] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] [background-size:16px_16px] m750:px-5 m750:py-10">
       <div className="flex items-center justify-between p-4 bg-white shadow">
@@ -188,14 +241,31 @@ const ChatInterface = () => {
                 } mb-4`}
               >
                 <div
-                  className={`rounded-lg pl-3 pr-3 max-w-sm shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black ${
+                  className={`relative rounded-lg pl-3 pr-3 max-w-sm shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black ${
                     message.sender === "bot"
                       ? "bg-purple-300 text-black max-w-lg"
                       : "bg-gray-200 "
                   }`}
                 >
-                  <p className="p-5">{message.text}</p>
+                  <p className="p-5">
+  {translatedMessages[message._id] !== undefined
+    ? translatedMessages[message._id]
+    : message.text}
+</p>
+
                 </div>
+                {message.sender === 'bot' && (
+      <div className="absolute left-72 bottom-2">
+        <button
+          onClick={() => toggleTranslation(message.text, message._id)}
+          className="text-pink-900"
+        >
+           {translatedMessages[message._id] !== undefined
+    ? 'Original'
+    : 'Translate'}
+        </button>
+      </div>
+    )}
               </div>
             ))}
 
