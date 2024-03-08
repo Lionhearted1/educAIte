@@ -1,16 +1,22 @@
 
 const express = require("express");
 const TextTranslationClient = require("@azure-rest/ai-translation-text").default
+require('dotenv').config();
+const cors = require('cors');
+
+
+
 
 const app = express();
-const port = 3000;
+const port = 3002;
 
 const apiKey = "";
 const endpoint = "https://api.cognitive.microsofttranslator.com/";
 const region = "centralindia";
 
+app.use(cors());
 const translateCredential = {
-  key: apiKey,
+  key: process.env.API_KEY,
   region,
 };
 const translationClient = new TextTranslationClient(endpoint, translateCredential);

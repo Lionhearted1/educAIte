@@ -2,13 +2,14 @@
 // Importing necessary modules
 import React, { useState, useEffect } from 'react';
 import axios from 'axios'; // Import Axios
-import styles from './dashboard2style.css';
 import HeroSectionComponent from './components/HeroSectionComponent';
 import TopBarComponent from './components/TopBarComponent';
 import FolderSection from './components/FolderSection';
 import './dashboard2style.css';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
+import Link from "next/link";
+
 
 // Function component
 function Page() {
@@ -53,6 +54,21 @@ function Page() {
 
         <div className="flex flex-col flex-grow">
           <HeroSectionComponent />
+
+          {
+          
+          folders.length==0 && 
+          <div className='mt-10 w-full'><h2>Please Create a Folder to Start Studying</h2>
+          <Link href={"/chatfolder"}>
+          <button
+          className="bg-purple-500 border-2 mt-5 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:bg-purple-200 text-white py-2 hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 px-4 rounded-lg "
+        >
+          Create Folder
+        </button>
+        </Link>
+        </div>
+          
+          }
 
           <div className="flex justify-evenly flex-wrap mb-5">
             <FolderSection folders={folders} />

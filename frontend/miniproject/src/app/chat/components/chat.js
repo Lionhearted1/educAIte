@@ -5,34 +5,40 @@ import Quiz from "./quiz";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
+import BlackLoader from "./BlackLoader";
+import UploadOverlay from "./uploadOverlay";
 
 const ChatInterface = () => {
   const searchParams = useSearchParams();
-  const username = Cookies.get('user_name');
+  const username = Cookies.get("user_name");
+  const [loading, setLoading] = useState(false);
+  const [uploading,setUploading]=useState(false)
 
   const unique_id = searchParams.get("unique_id");
   console.log(unique_id);
 
   const [messages, setMessages] = useState([]);
 
-  const router=useRouter();
-  useEffect(()=>{
-    if(username=="" || username==null){
-      router.push("/login")
+  const router = useRouter();
+  useEffect(() => {
+    if (username == "" || username == null) {
+      router.push("/login");
     }
-  },[router])
+  }, [router]);
 
   useEffect(() => {
     // Fetch messages from external API when the component mounts
     const fetchMessages = async () => {
+      setLoading(true)
       try {
         const response = await axios.get(
           `http://127.0.0.1:3000/chat/get_chats?user_name=${username}&&unique_id=${unique_id}`
         );
         console.log(response.data);
-        const chatmessages=response.data.chats
+        const chatmessages = response.data.chats;
+        setLoading(false)
         setMessages(chatmessages);
       } catch (error) {
         console.error("Error fetching messages:", error);
@@ -43,9 +49,11 @@ const ChatInterface = () => {
   }, []);
 
   const [newMessage, setNewMessage] = useState("");
+  const [uploadmsg,setuploadMsg]=useState("");
 
   const handleSendMessage = async () => {
     try {
+      setLoading(true)
       const response = await axios.post("http://127.0.0.1:3000/chat/chat", {
         unique_id: unique_id,
         user_name: username,
@@ -56,6 +64,7 @@ const ChatInterface = () => {
 
       if (response.status === 200) {
         window.location.reload();
+        setLoading(false)
         // Implement logic to handle successful response
       } else {
         console.error("Unexpected status code:", response.status);
@@ -80,11 +89,24 @@ const ChatInterface = () => {
 
   const handleFileUpload = async (event) => {
     const file = event.target.files[0];
+    setUploading(true);
 
     if (!file) {
-      return; // No file selected
+      setuploadMsg("Please Upload a File")
+      setTimeout(()=>{
+        return; // No file selected
+      },1000)
+      setUploading(false)
     }
 
+    if (!file.name.toLowerCase().endsWith(".pdf")) {
+      setuploadMsg("Invalid file format. Please select a PDF file.");
+      setTimeout(()=>{
+        return; 
+      },2000)
+      setUploading(false)
+    }
+    setuploadMsg("Uploading Your File")
     try {
       const formData = new FormData();
       formData.append("file_content", file); // 'file_content' is the field name expected by the server
@@ -99,8 +121,13 @@ const ChatInterface = () => {
             "Content-Type": "multipart/form-data",
           },
         }
-      );
-
+      ); 
+      setuploadMsg("Uploaded")
+      setTimeout(()=>{
+        setUploading(false); 
+      },2000)
+      
+      
       console.log("File uploaded successfully:", response.data);
     } catch (error) {
       console.error("Error uploading file:", error);
@@ -142,11 +169,17 @@ const ChatInterface = () => {
       </div>
 
       <div
-        className="chatInt flex-grow p-4 overflow-y-auto"
+        className="chatInt flex-grow p-4 overflow-y-auto relative"
         style={{ display: isToggled ? "block" : "none" }}
       >
-        <div className="flex flex-col h-full">
+        {uploading && <div className="w-full flex justify-center items-center text-center absolute">
+              <UploadOverlay msg={uploadmsg} loading={loading}/>
+            </div>}
+        <div className="flex flex-col h-full relative ">
+          {messages.length===0 &&<div className="w-full h-full flex-col text-center"><p className="text-3xl">&#9650;</p><p className="text-xl">Toggle this for quiz</p><div className="w-full h-full flex justify-center items-center font-semibold text-2xl">Don't Forget to upload a PDF before chatting</div></div>}
+        
           <div className="flex-grow w-[100%] mt-5 overflow-x-hidden overflow-y-auto">
+            
             {messages.map((message, index) => (
               <div
                 key={index}
@@ -157,7 +190,7 @@ const ChatInterface = () => {
                 <div
                   className={`rounded-lg pl-3 pr-3 max-w-sm shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black ${
                     message.sender === "bot"
-                      ? "bg-purple-500 text-black max-w-lg"
+                      ? "bg-purple-300 text-black max-w-lg"
                       : "bg-gray-200 "
                   }`}
                 >
@@ -165,6 +198,12 @@ const ChatInterface = () => {
                 </div>
               </div>
             ))}
+
+            {loading && (
+              <div className="mt-auto h-full flex flex-col items-center justify-center">
+                <BlackLoader />
+              </div>
+            )}
             <div ref={messagesEndRef}></div>
           </div>
           <div className="flex items-center gap-5 justify-center mb-8 mt-4">
@@ -175,7 +214,8 @@ const ChatInterface = () => {
               onKeyPress={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault(); // Prevent the default form submission
-                  handleSendMessage(); // Call your function on "Enter" key press
+                  handleSendMessage();
+                  disabled={loading} // Call your function on "Enter" key press
                 }
               }}
               placeholder="Your Prompt Here...."
@@ -184,6 +224,7 @@ const ChatInterface = () => {
             <button
               onClick={handleSendMessage}
               className="px-4 py-2 text-white bg-[#C4A1FF] rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
+              disabled={loading}
             >
               Send
             </button>

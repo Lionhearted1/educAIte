@@ -4,6 +4,7 @@ import 'tailwindcss/tailwind.css';
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import Cookies from 'js-cookie';
+import Loader from "./Loader";
 
 const Quiz = () => {
     const searchParams = useSearchParams();
@@ -12,6 +13,7 @@ const Quiz = () => {
   const unique_id = searchParams.get("unique_id");
   console.log(unique_id);
   const [newMessage, setNewMessage] = useState("");
+  const [loading,setLoading]=useState(false)
   const [questions, setQuestions] = useState([
     {
         question: 'What is the capital of France?',
@@ -28,14 +30,15 @@ const Quiz = () => {
     const [isQuiz,setIsquiz]=useState(false)
     const handleFinishQuestion=()=>{
             setSelectedOption(null);
-            setIsquiz(false)
-            setSelectedOption(null)
-            setNewMessage("")
-
-          
+            setNewMessage("");
+            setIsquiz(false);
+                      
     }
     const handleSendMessage = async () => {
         try {
+          setLoading(true)
+          setSelectedOption(null);
+          setIsAnswered(false);
           const response = await axios.post('http://127.0.0.1:3000/quiz/quiz', {
             unique_id: unique_id,
             user_name: username,
@@ -45,17 +48,21 @@ const Quiz = () => {
           console.log('Message sent successfully:', response.data);
       
           if (response.status === 200) {
-            console.log(response.data)
+            setLoading(false)
             setQuestions(response.data.quizResults.quiz_questions);
             setIsquiz(true);
+            setNewMessage("");
             // Implement logic to handle successful response
           } else {
             setIsquiz(false)
+            setLoading(false)
             console.error('Unexpected status code:', response.status);
             // Handle unexpected status code
           }
         } catch (error) {
           if (error.response) {
+            setIsquiz(false)
+            setLoading(false)
             // The request was made and the server responded with a status code
             // that falls out of the range of 2xx
             console.error('Error response data:', error.response.data);
@@ -164,7 +171,11 @@ const Quiz = () => {
                      </button>
                  )}
              </div>
+
              <div className="flex items-center gap-5 justify-center mb-8 mt-4 " style={{ display: isQuiz ? 'none' : 'block' }}>
+              <div className="text-3xl text-white font-semibold mb-8">Enter the Desired Concept for Generating Quiz</div>
+              {loading && <Loader/>}
+              
             <input
               type="text"
               onChange={(e) => setNewMessage(e.target.value)}
@@ -173,6 +184,7 @@ const Quiz = () => {
             />
             <button
               onClick={handleSendMessage}
+              disabled={loading}
               className="px-4 py-2 text-white bg-[#C4A1FF] rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
             >
               Send

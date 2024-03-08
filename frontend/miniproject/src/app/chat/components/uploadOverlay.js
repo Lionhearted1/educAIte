@@ -1,13 +1,16 @@
 'use client';
-import React from 'react'
+import React, { useState } from 'react'
+import BlackLoader  from './BlackLoader';
 
-function UploadOverlay() {
+
+function UploadOverlay(props) {
+
+  const [loading,setLoading]=useState(true)
+  
+
   return (
-    <div className='h-[60vh] w-[60vh] bg-white/40'>
-        <button className='border-2 border-black p-1 h-10 rounded-lg bg-lavender mb-8 mt-5 -translate-y-5 w-64 
-              shadow-[8px_8px_0px_rgba(0,0,0,1)]'>
-            Upload
-        </button>
+    <div className='relative inset-0 rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black h-[60vh] w-[60vh] bg-white z-10 flex flex-col items-center justify-center' >
+        <h1 className=''>{props.msg}</h1>
     </div>
   )
 }

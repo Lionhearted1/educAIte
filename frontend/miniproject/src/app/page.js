@@ -2,6 +2,7 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { appWithTranslation } from 'next-i18next';
 
 function Home() {
   const router = useRouter();
@@ -18,4 +19,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default appWithTranslation(Home);

@@ -96,8 +96,9 @@ const Folder = () => {
               className="bg-yellow-400 h-16 absolute w-16 rounded-full border-0 top-8 left-[10%]  -rotate-12  border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] over"
             ></div>
             <center>
-              <h1 className="text-2xl font-bold mb-4 ">Chat Folders</h1>
+              <h1 className="text-4xl font-bold mb-4 ">Chat Folders</h1>
             </center>
+            {folders.length===0&&<div className="w-full h-full flex justify-center items-center text-2xl font-semibold">Create Folders to Start Studying</div>}
             <div className="grid grid-cols-3 gap-20 h-full">
               {folders.map((folder) => (
                 <Card1Component key={folder.id} folder={folder} />
