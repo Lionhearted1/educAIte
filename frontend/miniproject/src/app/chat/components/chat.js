@@ -5,24 +5,35 @@ import Quiz from "./quiz";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import Cookies from 'js-cookie';
+import { useRouter } from "next/navigation";
 
 const ChatInterface = () => {
   const searchParams = useSearchParams();
+  const username = Cookies.get('user_name');
 
   const unique_id = searchParams.get("unique_id");
   console.log(unique_id);
 
   const [messages, setMessages] = useState([]);
 
+  const router=useRouter();
+  useEffect(()=>{
+    if(username=="" || username==null){
+      router.push("/login")
+    }
+  },[router])
+
   useEffect(() => {
     // Fetch messages from external API when the component mounts
     const fetchMessages = async () => {
       try {
         const response = await axios.get(
-          `http://127.0.0.1:3000/chat/get_chats?user_name=hello&&unique_id=${unique_id}`
+          `http://127.0.0.1:3000/chat/get_chats?user_name=${username}&&unique_id=${unique_id}`
         );
         console.log(response.data);
-        setMessages(response.data.chats);
+        const chatmessages=response.data.chats
+        setMessages(chatmessages);
       } catch (error) {
         console.error("Error fetching messages:", error);
       }
@@ -37,14 +48,13 @@ const ChatInterface = () => {
     try {
       const response = await axios.post("http://127.0.0.1:3000/chat/chat", {
         unique_id: unique_id,
-        user_name: "hello",
+        user_name: username,
         input_text: newMessage,
       });
 
       console.log("Message sent successfully:", response.data);
 
       if (response.status === 200) {
-        console.log(response.data);
         window.location.reload();
         // Implement logic to handle successful response
       } else {
@@ -78,7 +88,7 @@ const ChatInterface = () => {
     try {
       const formData = new FormData();
       formData.append("file_content", file); // 'file_content' is the field name expected by the server
-      formData.append("user_name", "hello"); // Replace with your actual username
+      formData.append("user_name", username); // Replace with your actual username
       formData.append("unique_id", unique_id); // Use the unique_id obtained from searchParams
 
       const response = await axios.post(

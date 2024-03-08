@@ -3,9 +3,11 @@ import React, { useState, useEffect } from "react";
 import 'tailwindcss/tailwind.css';
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import Cookies from 'js-cookie';
 
 const Quiz = () => {
     const searchParams = useSearchParams();
+    const username = Cookies.get('user_name');
 
   const unique_id = searchParams.get("unique_id");
   console.log(unique_id);
@@ -34,7 +36,7 @@ const Quiz = () => {
         try {
           const response = await axios.post('http://127.0.0.1:3000/quiz/quiz', {
             unique_id: unique_id,
-            user_name: "hello",
+            user_name: username,
             input_text: newMessage,
           });
       

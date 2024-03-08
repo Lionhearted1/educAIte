@@ -5,6 +5,7 @@ import Card1Component from "./Card1Component";
 import axios from "axios";
 import { useRouter } from 'next/navigation'
 import { v4 as uuidv4 } from 'uuid';
+import Cookies from 'js-cookie';
 
 const Folder = () => {
   const [showOverlay, setShowOverlay] = useState(false);
@@ -13,11 +14,20 @@ const Folder = () => {
   const [err,setErr]=useState(false)
   const router = useRouter();
 
+  const username = Cookies.get('user_name');
+  console.log(username)
+
+  useEffect(()=>{
+    if(username=="" || username==null){
+      router.push("/login")
+    }
+  },[router])
+
   // Function to fetch folders from external API
   const fetchFoldersFromExternalApi = async () => {
     try {
       const apiUrl = `http://127.0.0.1:3000/folders/get_all`;
-      const user_name = 'hello'; // Replace this with your actual user_name
+      const user_name = username; // Replace this with your actual user_name
       const response = await axios.get(apiUrl, { params: { user_name } });
       const response_folders= response.data.folders;
       setFolders(response_folders)
@@ -34,7 +44,7 @@ const Folder = () => {
       const response = await axios.post('http://127.0.0.1:3000/folders/create', {
         unique_id: uuidv4(),
         folder_name: fileName,
-        user_name: "hello",
+        user_name: username,
       });
   
       if (response.status === 200) {

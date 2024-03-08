@@ -7,11 +7,22 @@ import HeroSectionComponent from './components/HeroSectionComponent';
 import TopBarComponent from './components/TopBarComponent';
 import FolderSection from './components/FolderSection';
 import './dashboard2style.css';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/navigation';
 
 // Function component
 function Page() {
   // State for storing fetched folders
   const [folders, setFolders] = useState([]);
+  const username = Cookies.get('user_name');
+  console.log(username)
+  
+  const router=useRouter();
+  useEffect(()=>{
+    if(username=="" || username==null){
+      router.push("/login")
+    }
+  },[router])
 
   useEffect(() => {
     // Define the API endpoint for fetching folders
@@ -20,7 +31,7 @@ function Page() {
     // Fetch folders using Axios
     const fetchFolders = async () => {
       try {
-        const user_name = 'hello'; // Replace this with your actual user_name
+        const user_name = username; // Replace this with your actual user_name
         const response = await axios.get(apiUrl, { params: { user_name } });
         const response_folders= response.data.folders;
         setFolders(response_folders)
