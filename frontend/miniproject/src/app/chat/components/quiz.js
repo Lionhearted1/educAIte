@@ -11,7 +11,7 @@ const Quiz = () => {
 
   const unique_id = searchParams.get("unique_id");
   console.log(unique_id);
-
+  const [newMessage, setNewMessage] = useState("");
   const [questions, setQuestions] = useState([
     {
         question: 'What is the capital of France?',
@@ -29,6 +29,8 @@ const Quiz = () => {
     const handleFinishQuestion=()=>{
             setSelectedOption(null);
             setIsquiz(false)
+            setSelectedOption(null)
+            setNewMessage("")
 
           
     }
@@ -103,7 +105,7 @@ const Quiz = () => {
     };
 
     const { question, options } = questions[currentQuestionIndex];
-    const [newMessage, setNewMessage] = useState("");
+   
 
     
 
@@ -141,7 +143,7 @@ const Quiz = () => {
              <div className="flex flex-row gap-5 mb-8 items-center justify-between " style={{ display: isQuiz ? 'block' : 'none' }}>
                  <button
                      onClick={handlePreviousQuestion}
-                     className="bg-purple-700 hover:bg-purple-500 shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black text-white font-bold py-2 px-4 hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 rounded-lg focus:outline-none focus:shadow-outline"
+                     className="bg-purple-700 hover:bg-purple-500 shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black text-white font-bold py-2 px-4 hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 rounded-lg focus:outline-none focus:shadow-outline mr-4"
                      disabled={currentQuestionIndex === 0}
                  >
                      Previous
@@ -156,7 +158,7 @@ const Quiz = () => {
                  ) : (
                      <button
                          onClick={handleNextQuestion}
-                         className="bg-purple-700 hover:bg-purple-500 shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black text-white font-bold py-2 px-4 rounded-lg focus:outline-none hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 focus:shadow-outline"
+                         className="bg-purple-700 hover:bg-purple-500 shadow-[8px_8px_0px_rgba(0,0,0,1)] border-2 border-black text-white font-bold py-2 px-4 rounded-lg focus:outline-none hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 focus:shadow-outline ml-4"
                      >
                          Next
                      </button>

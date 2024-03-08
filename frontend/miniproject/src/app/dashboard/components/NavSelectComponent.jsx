@@ -11,9 +11,9 @@ export default function Select() {
   const handleItemClick = (itemName) => {
     setSelectedItem(itemName);
     setIsActiveSelect(false);
-    if(itemName=="home"){
-      router.push(`/${itemname}`)
-    }else if(itemName=="chat"){
+    if(itemName=="Home"){
+      router.push(`/dashboard`)
+    }else if(itemName=="Chat"){
       router.push('chatfolder')
     }else {
       router.push('/signout')

@@ -14,8 +14,15 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [err, setErr] = useState(false);
   const [errMsg, setErrMsg] = useState("");
+
   const username = Cookies.get('user_name');
   console.log(username)
+  useEffect(()=>{
+    if(username){
+      router.push("/dashboard")
+    }
+  },[router])
+ 
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -49,6 +56,8 @@ function Signup() {
       setErr(false)
     }
   },[user_name,password])
+
+
 
   return (
     <>

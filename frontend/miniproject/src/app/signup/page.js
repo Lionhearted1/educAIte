@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'react-toastify';
 import "./signup.css"
 import Link from 'next/link';
+import Cookies from 'js-cookie';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -16,6 +17,14 @@ function Signup() {
   const [err,setErr]=useState(false)
   const [errMsg,setErrMsg]=useState("")
 
+  const username = Cookies.get('user_name');
+  
+  useEffect(()=>{
+    if(username){
+      router.push("/dashboard")
+    }
+  },[router])
+
   const handleSignup = async (e) => {
     e.preventDefault();
     const authEndpoint = `http://127.0.0.1:3000/auth/register`;
@@ -25,7 +34,8 @@ function Signup() {
   
       if (response.status === 200) {
         // Successful registration, redirect to /dashboard
-        router.push('/dashboard');
+        Cookies.set('user_name', user_name);
+        router.push("/dashboard");
       } else {
         setErr(true);
         setErrMsg(response.data.message || 'Registration failed');
