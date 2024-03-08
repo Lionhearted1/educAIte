@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useRef, useState, useEffect } from 'react';
 import "./style.css";
 import Quiz from "./quiz";
 import Link from "next/link";
@@ -103,6 +103,13 @@ const ChatInterface = () => {
     setIsToggled((prevIsToggled) => !prevIsToggled);
   };
 
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    // Scroll to the bottom when messages change or component mounts
+    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
   return (
     <div className="flex flex-col h-screen overflow-x-hidden relative rounded-md border-2 border-black bg-white bg-[radial-gradient(#cacbce_1px,transparent_1px)] shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] [background-size:16px_16px] m750:px-5 m750:py-10">
       <div className="flex items-center justify-between p-4 bg-white shadow">
@@ -125,7 +132,7 @@ const ChatInterface = () => {
       </div>
 
       <div
-        className="chatInt flex-grow overflow-x-hidden p-4"
+        className="chatInt flex-grow overflow-x-hidden overflow-y-auto p-4"
         style={{ display: isToggled ? "block" : "none" }}
       >
         <div className="flex flex-col h-full">
@@ -149,6 +156,7 @@ const ChatInterface = () => {
               </div>
             ))}
           </div>
+          <div ref={messagesEndRef}></div>
           <div className="flex items-center gap-5 justify-center mb-8 mt-4">
             <input
               type="text"
