@@ -10,6 +10,7 @@ const Folder = () => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [fileName, setFileName] = useState("");
   const [folders, setFolders] = useState([]);
+  const [err,setErr]=useState(false)
   const router = useRouter();
 
   // Function to fetch folders from external API
@@ -28,7 +29,7 @@ const Folder = () => {
 
   // Function to save folders to the external API
   const saveFoldersToExternalApi = async () => {
-    try {
+    try{
       
       const response = await axios.post('http://127.0.0.1:3000/folders/create', {
         unique_id: uuidv4(),
@@ -47,20 +48,32 @@ const Folder = () => {
   };
   
   const handleAddFolder = () => {
-    setShowOverlay(true);
+
+      setShowOverlay(true);
+ 
   };
 
   const handleSave = () => {
     saveFoldersToExternalApi();
     setShowOverlay(false);
     window.location.reload();
+    setErr(false)
     
   };
 
   // Fetch folders on component mount
   useEffect(() => {
+   
     fetchFoldersFromExternalApi();
   }, []);
+
+  useEffect(()=>{
+    if(!fileName){
+      setErr(true)
+    }else{
+      setErr(false)
+    }
+  },[showOverlay, fileName])
 
     return (
       <div>
@@ -84,10 +97,12 @@ const Folder = () => {
             {showOverlay && (
               <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                 <div className="bg-white w-[40vw] h-[40vh] p-4 rounded">
+                 
                   <center>
                     <h2 className="mb-2 text-4xl font-extrabold font-mono mt-5">
                       Add Folder
                     </h2>
+                    {err && (<p className="text-red-300">Please  enter a valid name.</p>)}
                   </center>
                   <div className="mx-20 mb-20 mt-12">
                     <center>
@@ -99,8 +114,9 @@ const Folder = () => {
                         placeholder="Enter file name"
                       />
                       <button
-                        className="bg-purple-500 border-2 mt-5 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:bg-purple-200 text-white py-2 hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 px-4 rounded-lg"
+                        className="bg-purple-500 border-2 mt-5 border-black shadow-[8px_8px_0px_rgba(0,0,0,1)] hover:bg-purple-200 text-white py-2 hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 px-4 rounded-lg "
                         onClick={handleSave}
+                        disabled={!fileName}
                       >
                         Save
                       </button>
@@ -114,6 +130,7 @@ const Folder = () => {
               <button
                 className="bg-yellow-500 hover:bg-yellow-200 text-black border-black border-2 py-2 px-4 rounded-full hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 mt-4 shadow-[8px_8px_0px_rgba(0,0,0,1)]"
                 onClick={handleAddFolder}
+
               >
                 Add Folder
               </button>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from "react";
 import "./style.css";
 import Quiz from "./quiz";
 import Link from "next/link";
@@ -21,7 +21,7 @@ const ChatInterface = () => {
         const response = await axios.get(
           `http://127.0.0.1:3000/chat/get_chats?user_name=hello&&unique_id=${unique_id}`
         );
-        console.log(response.data)
+        console.log(response.data);
         setMessages(response.data.chats);
       } catch (error) {
         console.error("Error fetching messages:", error);
@@ -35,35 +35,35 @@ const ChatInterface = () => {
 
   const handleSendMessage = async () => {
     try {
-      const response = await axios.post('http://127.0.0.1:3000/chat/chat', {
+      const response = await axios.post("http://127.0.0.1:3000/chat/chat", {
         unique_id: unique_id,
         user_name: "hello",
         input_text: newMessage,
       });
-  
-      console.log('Message sent successfully:', response.data);
-  
+
+      console.log("Message sent successfully:", response.data);
+
       if (response.status === 200) {
-        console.log(response.data)
-        window.location.reload()
+        console.log(response.data);
+        window.location.reload();
         // Implement logic to handle successful response
       } else {
-        console.error('Unexpected status code:', response.status);
+        console.error("Unexpected status code:", response.status);
         // Handle unexpected status code
       }
     } catch (error) {
       if (error.response) {
         // The request was made and the server responded with a status code
         // that falls out of the range of 2xx
-        console.error('Error response data:', error.response.data);
+        console.error("Error response data:", error.response.data);
       } else if (error.request) {
         // The request was made but no response was received
-        console.error('Error request:', error.request);
+        console.error("Error request:", error.request);
       } else {
         // Something happened in setting up the request that triggered an Error
-        console.error('Error message:', error.message);
+        console.error("Error message:", error.message);
       }
-  
+
       // Handle error, show a message to the user, or perform any other necessary actions
     }
   };
@@ -107,7 +107,7 @@ const ChatInterface = () => {
 
   useEffect(() => {
     // Scroll to the bottom when messages change or component mounts
-    messagesEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
   return (
@@ -132,7 +132,7 @@ const ChatInterface = () => {
       </div>
 
       <div
-        className="chatInt flex-grow overflow-x-hidden overflow-y-auto p-4"
+        className="chatInt flex-grow p-4 overflow-y-auto"
         style={{ display: isToggled ? "block" : "none" }}
       >
         <div className="flex flex-col h-full">
@@ -155,12 +155,19 @@ const ChatInterface = () => {
                 </div>
               </div>
             ))}
+            <div ref={messagesEndRef}></div>
           </div>
-          <div ref={messagesEndRef}></div>
           <div className="flex items-center gap-5 justify-center mb-8 mt-4">
             <input
               type="text"
+              value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault(); // Prevent the default form submission
+                  handleSendMessage(); // Call your function on "Enter" key press
+                }
+              }}
               placeholder="Your Prompt Here...."
               className="flex-grow px-4 py-2 mr-2 text-gray-700 bg-white hover:shadow-none hover:translate-x-1 hover:translate-y-1 duration-150 border-2 border-black rounded-lg shadow-[8px_8px_0px_rgba(0,0,0,1)] focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
