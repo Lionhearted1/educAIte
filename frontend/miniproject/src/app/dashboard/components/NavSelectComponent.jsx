@@ -31,7 +31,7 @@ export default function Select({ items }) {
     </button>
     <div
       style={{
-        top: isActiveSelect ? '80px' : '50px',
+        top: isActiveSelect ? '20px' : '50px',
         opacity: isActiveSelect ? '1' : '0',
         visibility: isActiveSelect ? 'visible' : 'hidden',
       }}

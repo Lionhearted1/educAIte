@@ -1,45 +1,56 @@
 "use client";
-import React, { useState } from "react";
-import styles from "./dashboard2style.css";
-import HeroSectionComponent from "./components/HeroSectionComponent";
-import Card1Component from "./components/Card1Component";
-import TopBarComponent from "./components/TopBarComponent";
-import Card2Component from "./components/Card2Component";
-import NavSelectComponent from "./components/NavSelectComponent";
-import FolderSection from "./components/FolderSection";
-import "./dashboard2style.css";
+// Importing necessary modules
+import React, { useState, useEffect } from 'react';
+import axios from 'axios'; // Import Axios
+import styles from './dashboard2style.css';
+import HeroSectionComponent from './components/HeroSectionComponent';
+import TopBarComponent from './components/TopBarComponent';
+import FolderSection from './components/FolderSection';
+import './dashboard2style.css';
 
-function page() {
-  const [folders, setFolders] = useState([
-    { id: 1, name: 'Folder 1',username: "" },
-    { id: 2, name: 'Folder 2',username: "" },
-    { id: 3, name: 'Folder 3',username: "" },
-    { id: 4, name: 'Folder 4',username: "" },
-    { id: 5, name: 'Folder 5',username: "" },
-    { id: 6, name: 'Folder 6',username: "" },
-    { id: 7, name: 'Folder 7',username: "" },
-  ]);
-  const addFolder = () => {
-    const newFolder = { id: folders.length + 1, name: `Folder ${folders.length + 1}` };
-    setFolders([newFolder, ...folders]); // Prepend the new folder to the existing list
-  };
+// Function component
+function Page() {
+  // State for storing fetched folders
+  const [folders, setFolders] = useState([]);
+
+  useEffect(() => {
+    // Define the API endpoint for fetching folders
+    const apiUrl = `http://127.0.0.1:3000/folders/get_all`;
+
+    // Fetch folders using Axios
+    const fetchFolders = async () => {
+      try {
+        const user_name = 'hello'; // Replace this with your actual user_name
+        const response = await axios.get(apiUrl, { params: { user_name } });
+        const response_folders= response.data.folders;
+        setFolders(response_folders)
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error fetching folders:', error);
+      }
+    };
+
+    // Call the fetchFolders function when the component mounts
+    fetchFolders();
+  }, []); // The empty dependency array ensures that the effect runs only once when the component mounts
+
+  // JSX structure
   return (
-    // <div className=" bg-gradient-container ">
-      <div className="flex items-center justify-center h-screen">
-        <div className="flex flex-col h-screen">
-          <TopBarComponent />
+    <div className="flex items-center justify-center h-screen">
+      <div className="flex flex-col h-screen">
+        <TopBarComponent />
 
-          <div className="flex flex-col flex-grow">
-            <HeroSectionComponent />
+        <div className="flex flex-col flex-grow">
+          <HeroSectionComponent />
 
-            <div className="flex justify-evenly flex-wrap mb-5">
-              <FolderSection folders={folders} addFolder={addFolder} />
-            </div>
+          <div className="flex justify-evenly flex-wrap mb-5">
+            <FolderSection folders={folders} />
           </div>
         </div>
-       </div>
-    // </div>
+      </div>
+    </div>
   );
 }
 
-export default page;
+// Exporting the component
+export default Page;

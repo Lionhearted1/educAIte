@@ -1,7 +1,7 @@
 import React from 'react';
 import Card1Component from './Card1Component';
 
-const FolderSection = ({ folders , addfolder }) => {
+const FolderSection = ({ folders  }) => {
   const limitedFolders = folders.slice(0, 5); // Get the first 5 folders
   const showAllCard = folders.length > 5;
 
