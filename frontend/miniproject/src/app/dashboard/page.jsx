@@ -21,6 +21,7 @@ function Page() {
   const router=useRouter();
   useEffect(()=>{
     if(username=="" || username==null){
+      //login 
       router.push("/login")
     }
   },[router])
@@ -29,7 +30,7 @@ function Page() {
     // Define the API endpoint for fetching folders
     const apiUrl = `http://127.0.0.1:3000/folders/get_all`;
 
-    // Fetch folders using Axios
+    // Fetch folders using Axios 
     const fetchFolders = async () => {
       try {
         const user_name = username; // Replace this with your actual user_name
@@ -56,7 +57,7 @@ function Page() {
           <HeroSectionComponent />
 
           {
-          
+          //Folder Check
           folders.length==0 && 
           <div className='mt-10 w-full'><h2>Please Create a Folder to Start Studying</h2>
           <Link href={"/chatfolder"}>
